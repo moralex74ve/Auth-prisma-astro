@@ -1,0 +1,41 @@
+---
+export const prerender = false;
+import Layout from "../layouts/Layout.astro";
+import UsuarioLogeado from '../components/UsuarioLogeado.astro';
+
+// Verificar la sesión
+const sessionCookie = Astro.cookies.get("session");
+const userCookie = Astro.cookies.get("user");
+
+if (!sessionCookie || !userCookie) {
+  return Astro.redirect("/login");
+}
+
+// Obtener datos del usuario
+const userData = JSON.parse(userCookie.value);
+---
+
+<Layout>
+  <main class="min-h-screen bg-gray-100 py-12 px-4 sm:px-6 lg:px-8">
+    <div class="max-w-md mx-auto bg-white rounded-lg shadow-lg p-8">
+      <h1 class="text-3xl font-bold text-center mb-8">Dashboard</h1>
+      
+      <UsuarioLogeado 
+        nombre={userData.nombre}
+        correo={userData.correo}
+        rol={userData.rol}
+      />
+
+      <div class="mt-8 text-center">
+        <form action="/api/logout" method="POST">
+          <button 
+            type="submit"
+            class="px-4 py-2 bg-red-600 text-white rounded-md hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-red-500"
+          >
+            Cerrar Sesión
+          </button>
+        </form>
+      </div>
+    </div>
+  </main>
+</Layout>
