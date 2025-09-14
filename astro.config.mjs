@@ -3,7 +3,7 @@ import node from "@astrojs/node";
 import tailwind from "@astrojs/tailwind";
 
 export default defineConfig({
-  output: "static",
+  output: "server",
   integrations: [tailwind()],
   adapter: node({
     mode: "standalone",

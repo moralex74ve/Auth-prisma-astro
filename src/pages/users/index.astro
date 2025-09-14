@@ -4,26 +4,7 @@ import Layout from "../../layouts/Layout.astro";
 import {actions} from "astro:actions";
 import { prisma } from "../../db";
 
-// Verificar sesión
-
-const session = Astro.cookies.get("session");
-if (!session) {
-  return Astro.redirect("/login");
-}
-
-// Verificar rol de administrador
-const userCookie = Astro.cookies.get("user");
-if (!userCookie) {
-  // Si no hay cookie de usuario, no se puede verificar el rol, denegar acceso.
-  return Astro.redirect("/dashboard?error=unauthorized");
-}
-
-const user = JSON.parse(userCookie.value);
-if (user.rol !== 'admin') {
-  // Si el rol no es admin, denegar acceso.
-  return Astro.redirect("/dashboard?error=unauthorized");
-}
-
+// La autenticación y autorización son manejadas por src/middleware.ts
 
 // Obtener todos los usuarios
 const users = await prisma.usuarios.findMany();
@@ -116,7 +97,7 @@ const deleteResult = Astro.getActionResult(actions.deleteUser);
                         </svg>
                         <span class="sr-only">Editar</span>
                       </button>
-                      <form action={actions.deleteUser} method="POST" class="inline" id="deleteForm" onsubmit="return confirmDelete()">
+                      <form action={actions.deleteUser} method="POST" class="inline" onsubmit="return confirmDelete()">
                         <input type="hidden" name="id" value={user.id} />
                         <button type="submit" 
                                 class="bg-red-500 text-white p-2 rounded-md hover:bg-red-600 inline-flex items-center justify-center"
@@ -340,7 +321,7 @@ const deleteResult = Astro.getActionResult(actions.deleteUser);
     if (deleteResult) {
       const result = JSON.parse(deleteResult);
       if (result.success) {
-        document.getElementById('deleteForm')?.reset();
+        // document.getElementById('deleteForm')?.reset(); // Removed as id is no longer unique and reset is not needed
       }
     }
   });

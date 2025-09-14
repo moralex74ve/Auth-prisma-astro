@@ -7,11 +7,11 @@ import { actions } from "astro:actions";
 // Verificar si ya hay una sesión activa
 const session = Astro.cookies.get("session");
 if (session) {
-  return Astro.redirect("/");
+  return Astro.redirect("/dashboard");
 }
 
 // Muestra el resultado de la acción
-const result = Astro.getActionResult(actions.getUsersEmail);
+const result = Astro.getActionResult(actions.loginUser);
 
 // Si el login fue exitoso (la acción ya guardó la sesión), redirigir
 if (result?.data?.status === 200) {
