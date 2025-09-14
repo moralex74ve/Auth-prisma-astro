@@ -15,7 +15,32 @@ const UserSchema = z.object({
 export const createUser = defineAction({
   accept: "form",
   input: UserSchema,
-  handler: async ({ nombre, correo, clave, rol }) => {
+  handler: async ({ nombre, correo, clave, rol }, { cookies }) => {
+    const userCookie = cookies.get('user');
+    if (!userCookie) {
+      return {
+        status: 401,
+        body: { message: "No autorizado: Sesión de usuario no encontrada." }
+      };
+    }
+
+    let user;
+    try {
+      user = JSON.parse(userCookie.value);
+    } catch (e) {
+      return {
+        status: 401,
+        body: { message: "No autorizado: Formato de cookie de usuario inválido." }
+      };
+    }
+
+    if (user.rol !== 'admin') {
+      return {
+        status: 403,
+        body: { message: "Prohibido: No tienes permisos de administrador." }
+      };
+    }
+
     try {
       const existingUser = await prisma.usuarios.findUnique({
         where: { correo }
@@ -46,8 +71,8 @@ export const createUser = defineAction({
       return {
         status: 201,
         success: true,
-        body: { 
-          message: "Usuario creado exitosamente", 
+        body: {
+          message: "Usuario creado exitosamente",
           user: {
             id: newUser.id,
             nombre: newUser.nombre,
@@ -75,7 +100,32 @@ export const updateUser = defineAction({
     activo: z.boolean().optional(),
     clave: z.string().min(6).optional() // Hacemos la clave opcional en actualizaciones
   }),
-  handler: async ({ id, nombre, correo, clave, rol, activo }) => {
+  handler: async ({ id, nombre, correo, clave, rol, activo }, { cookies }) => {
+    const userCookie = cookies.get('user');
+    if (!userCookie) {
+      return {
+        status: 401,
+        body: { message: "No autorizado: Sesión de usuario no encontrada." }
+      };
+    }
+
+    let user;
+    try {
+      user = JSON.parse(userCookie.value);
+    } catch (e) {
+      return {
+        status: 401,
+        body: { message: "No autorizado: Formato de cookie de usuario inválido." }
+      };
+    }
+
+    if (user.rol !== 'admin') {
+      return {
+        status: 403,
+        body: { message: "Prohibido: No tienes permisos de administrador." }
+      };
+    }
+
     try {
       const existingUser = await prisma.usuarios.findUnique({
         where: { id }
@@ -101,7 +151,7 @@ export const updateUser = defineAction({
         const hashedPassword = await bcrypt.hash(clave, 10);
         updateData.clave = hashedPassword;
       }
-      
+
       // console.log('Datos de actualización:', updateData);
 
       const updatedUser = await prisma.usuarios.update({
@@ -112,7 +162,7 @@ export const updateUser = defineAction({
       return {
         status: 200,
         success: true,
-        body: { 
+        body: {
           message: "Usuario actualizado exitosamente",
           user: {
             id: updatedUser.id,
@@ -139,7 +189,32 @@ export const deleteUser = defineAction({
   input: z.object({
     id: z.string() // Assuming uuid is represented as a string
   }),
-  handler: async ({ id }): Promise<{ success: boolean; message: string }> => {
+  handler: async ({ id }, { cookies }): Promise<{ success: boolean; message: string }> => {
+    const userCookie = cookies.get('user');
+    if (!userCookie) {
+      return {
+        success: false,
+        message: "No autorizado: Sesión de usuario no encontrada."
+      };
+    }
+
+    let user;
+    try {
+      user = JSON.parse(userCookie.value);
+    } catch (e) {
+      return {
+        success: false,
+        message: "No autorizado: Formato de cookie de usuario inválido."
+      };
+    }
+
+    if (user.rol !== 'admin') {
+      return {
+        success: false,
+        message: "Prohibido: No tienes permisos de administrador."
+      };
+    }
+
     try {
       console.log('Datos recibidos:', { id });
 
