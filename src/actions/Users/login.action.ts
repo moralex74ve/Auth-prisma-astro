@@ -2,8 +2,9 @@ import { defineAction } from "astro:actions";
 import { prisma } from "../../db";
 import { z } from "astro:schema";
 import bcrypt from "bcrypt";
+import { v4 as uuidv4 } from 'uuid';
 
-export const getUsersEmail = defineAction({
+export const loginUser = defineAction({
   accept: "form",
   input: z.object({
     correo: z.string().email(),
@@ -18,11 +19,13 @@ export const getUsersEmail = defineAction({
         },
       });
 
-      if (!user) {
+      // Si el usuario no existe, o si la contraseña no es válida, devuelve el mismo error.
+      // Esto previene la enumeración de usuarios.
+      if (!user || !(await bcrypt.compare(clave, user.clave))) {
         return {
-          status: 404,
+          status: 401,
           body: {
-            message: "Usuario no encontrado"
+            message: "Credenciales inválidas"
           }
         };
       }
@@ -37,16 +40,6 @@ export const getUsersEmail = defineAction({
         };
       }
 
-      const isPasswordValid = await bcrypt.compare(clave, user.clave);
-      if (!isPasswordValid) {
-        return {
-          status: 401,
-          body: {
-            message: "Contraseña incorrecta"
-          }
-        };
-      }
-
       // Actualizar último login
       await prisma.usuarios.update({
         where: { id: user.id },
@@ -55,8 +48,8 @@ export const getUsersEmail = defineAction({
         }
       });
 
-      // Crear una cookie de sesión
-      const sessionId = createSession(user.id.toString());
+      // Crear un ID de sesión seguro
+      const sessionId = uuidv4();
       
       // Establecer la cookie de sesión directamente aquí
       cookies.set("session", sessionId, {
@@ -109,9 +102,3 @@ export const getUsersEmail = defineAction({
     }
   },
 });
-
-function createSession(userId: string): string {
-  const timestamp = Date.now();
-  const random = Math.random().toString(36).substring(2, 15);
-  return `${userId}-${timestamp}-${random}`;
-}

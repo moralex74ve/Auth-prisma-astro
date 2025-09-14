@@ -13,25 +13,8 @@ if (session) {
 // Muestra el resultado de la acción
 const result = Astro.getActionResult(actions.getUsersEmail);
 
-// Si el login fue exitoso, guardar la sesión y redirigir
+// Si el login fue exitoso (la acción ya guardó la sesión), redirigir
 if (result?.data?.status === 200) {
-  if (result.data.body.session) {
-    Astro.cookies.set("session", result.data.body.session, {
-      httpOnly: true,
-      secure: true,
-      sameSite: "strict",
-      path: "/",
-    });
-  }
-
-  // También podemos guardar información básica del usuario si es necesario
-  Astro.cookies.set("user", JSON.stringify(result.data.body.user), {
-    httpOnly: true,
-    secure: true,
-    sameSite: "strict",
-    path: "/",
-  });
-
   return Astro.redirect("/dashboard");
 }
 
@@ -54,7 +37,7 @@ if (result?.data?.status === 200) {
           )
         }
       </div>
-      <form class="mt-8 space-y-6" action={actions.getUsersEmail} method="POST">
+      <form class="mt-8 space-y-6" action={actions.loginUser} method="POST">
         <div class="rounded-md shadow-sm -space-y-px">
           <div class="mb-4">
             <label for="correo" class="sr-only">Email</label>
