@@ -1,6 +1,18 @@
 ---
 import Welcome from "../components/Welcome.astro";
 import Layout from "../layouts/Layout.astro";
+export const prerender = false
+
+// Verificar la sesión
+const sessionCookie = Astro.cookies.get("session");
+const userCookie = Astro.cookies.get("user");
+
+if (!sessionCookie || !userCookie) {
+  return Astro.redirect("/login");
+}
+
+// Obtener datos del usuario
+const userData = JSON.parse(userCookie.value);
 
 ---
 

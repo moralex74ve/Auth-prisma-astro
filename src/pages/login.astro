@@ -7,7 +7,7 @@ import { actions } from "astro:actions";
 // Verificar si ya hay una sesión activa
 const session = Astro.cookies.get("session");
 if (session) {
-  return Astro.redirect("/dashboard");
+  return Astro.redirect("/");
 }
 
 // Muestra el resultado de la acción
