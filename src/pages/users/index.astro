@@ -11,6 +11,20 @@ if (!session) {
   return Astro.redirect("/login");
 }
 
+// Verificar rol de administrador
+const userCookie = Astro.cookies.get("user");
+if (!userCookie) {
+  // Si no hay cookie de usuario, no se puede verificar el rol, denegar acceso.
+  return Astro.redirect("/dashboard?error=unauthorized");
+}
+
+const user = JSON.parse(userCookie.value);
+if (user.rol !== 'admin') {
+  // Si el rol no es admin, denegar acceso.
+  return Astro.redirect("/dashboard?error=unauthorized");
+}
+
+
 // Obtener todos los usuarios
 const users = await prisma.usuarios.findMany();
 
