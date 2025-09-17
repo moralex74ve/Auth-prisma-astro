@@ -3,15 +3,13 @@ export const prerender = false;
 import Layout from "../layouts/Layout.astro";
 import UsuarioLogeado from '../components/UsuarioLogeado.astro';
 
-// Verificar la sesión
-const sessionCookie = Astro.cookies.get("session");
+// Obtener datos del usuario
 const userCookie = Astro.cookies.get("user");
 
-if (!sessionCookie || !userCookie) {
+if (!userCookie) {
   return Astro.redirect("/login");
 }
 
-// Obtener datos del usuario
 const userData = JSON.parse(userCookie.value);
 ---
 

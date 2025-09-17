@@ -155,7 +155,7 @@ const deleteResult = Astro.getActionResult(actions.deleteUser);
     </div>
 
     <!-- Modal de Edición -->
-    <div id="editModal" class="hidden fixed inset-0 bg-gray-600 bg-opacity-50 overflow-y-auto h-full w-full">
+    <div id="editModal" style="display:none;" class="fixed inset-0 bg-gray-600 bg-opacity-50 overflow-y-auto h-full w-full">
       <div class="relative top-20 mx-auto p-5 border w-96 shadow-lg rounded-md bg-white">
         <h3 class="text-lg font-medium leading-6 text-gray-900 mb-4">Editar Usuario</h3>
         <form action={actions.updateUser} method="POST" id="editForm" class="space-y-4" transition:persist>
@@ -209,23 +209,22 @@ const deleteResult = Astro.getActionResult(actions.deleteUser);
 <script is:inline>
   function editUser(user) {
     const modal = document.getElementById('editModal');
-    const form = document.getElementById('editForm');
     
     // Llenar el formulario con los datos del usuario
     document.getElementById('editId').value = user.id;
     document.getElementById('editNombre').value = user.nombre;
     document.getElementById('editCorreo').value = user.correo;
     document.getElementById('editRol').value = user.rol;
-    document.getElementById('editIsActive').checked = user.activo; // Reactivar esta línea
-    document.getElementById('miActive').textContent = document.getElementById('editIsActive').value
+    document.getElementById('editIsActive').checked = user.activo;
+    document.getElementById('miActive').textContent = document.getElementById('editIsActive').value;
     
     // Mostrar el modal
-    modal.classList.remove('hidden');
+    modal.style.display = 'block';
   }
 
   function closeEditModal() {
     const modal = document.getElementById('editModal');
-    modal.classList.add('hidden');
+    modal.style.display = 'none';
   }
 
   function confirmDelete() {
@@ -236,7 +235,7 @@ const deleteResult = Astro.getActionResult(actions.deleteUser);
   window.onclick = function(event) {
     const modal = document.getElementById('editModal');
     if (event.target == modal) {
-      closeEditModal();
+      modal.style.display = 'none';
     }
   }
 
