@@ -222,10 +222,5 @@ Las contribuciones son bienvenidas. Por favor, lee las pautas de contribución a
 📧 Contacto
 ¿Tienes preguntas? Abre un issue o contáctame en tu@email.com.
 
-¿Necesitas ayuda para crear un archivo de pautas de contribución (`CONTRIBUTING.md`) o la sección de "Problemas comunes" para tu `README`?
-
-
-
-
 
 
