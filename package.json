@@ -6,22 +6,27 @@
     "dev": "astro dev",
     "build": "astro build",
     "preview": "astro preview",
-    "astro": "astro"
+    "astro": "astro",
+    "seed": "tsx ./scripts/seed.ts",
+    "generate": "pnpm install @prisma/client && pnpx prisma db pull && pnpx prisma generate"
   },
   "dependencies": {
     "@astrojs/check": "^0.9.4",
     "@astrojs/node": "^9.4.3",
     "@astrojs/tailwind": "^6.0.2",
-    "@prisma/client": "^6.16.1",
+    "@prisma/client": "^6.16.2",
     "astro": "^5.13.7",
     "astro-cookie-session": "^1.1.0",
-    "bcrypt": "^5.1.1",
+    "bcryptjs": "^3.0.2",
+    "jsonwebtoken": "^9.0.2",
     "tailwindcss": "^3.4.17",
     "typescript": "^5.7.3",
     "uuid": "^11.0.5",
     "zod": "3.22.4"
   },
   "devDependencies": {
-    "@types/bcrypt": "^5.0.2"
+    "@types/bcryptjs": "^3.0.0",
+    "@types/jsonwebtoken": "^9.0.10",
+    "tsx": "^4.20.5"
   }
 }

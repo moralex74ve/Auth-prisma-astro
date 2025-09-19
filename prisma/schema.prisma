@@ -9,108 +9,17 @@ datasource db {
 }
 
 model usuarios {
-  id             String    @id @default(dbgenerated("uuid_generate_v4()")) @db.Uuid
-  nombre         String    @db.VarChar(50)
-  correo         String    @unique(map: "usuarios_correo_idx") @db.VarChar(100)
-  clave          String    @db.VarChar(255)
-  rol            String    @default("usuario") @db.VarChar(20)
-  activo         Boolean   @default(true)
-  ultimo_login   DateTime? @db.Timestamp(6)
-  creado_en      DateTime  @default(now()) @db.Timestamp(6)
-  actualizado_en DateTime  @default(now()) @updatedAt @db.Timestamp(6)
+  id             String     @id @default(dbgenerated("uuid_generate_v4()")) @db.Uuid
+  nombre         String     @db.VarChar(50)
+  correo         String     @unique(map: "usuarios_correo_idx") @db.VarChar(100)
+  clave          String     @db.VarChar(255)
+  rol            String     @default("usuario") @db.VarChar(20)
+  activo         Boolean    @default(true)
+  ultimo_login   DateTime?  @db.Timestamp(6)
+  creado_en      DateTime   @default(now()) @db.Timestamp(6)
+  actualizado_en DateTime   @default(now()) @updatedAt @db.Timestamp(6)
+  
 
   @@map("usuarios")
 }
 
-/// This model contains row level security and requires additional setup for migrations. Visit https://pris.ly/d/row-level-security for more info.
-model accounts {
-  id                  String  @id
-  user_id             String
-  type                String
-  provider            String
-  provider_account_id String
-  refresh_token       String?
-  access_token        String?
-  expires_at          Int?
-  token_type          String?
-  scope               String?
-  id_token            String?
-  session_state       String?
-  users               users   @relation(fields: [user_id], references: [id], onDelete: Cascade)
-
-  @@unique([provider, provider_account_id])
-}
-
-/// This model contains row level security and requires additional setup for migrations. Visit https://pris.ly/d/row-level-security for more info.
-model asistencia {
-  id         String   @id(map: "Asistencia_pkey") @default(dbgenerated("gen_random_uuid()")) @db.Uuid
-  miembro_id String   @db.Uuid
-  evento_id  String   @db.Uuid
-  presente   Boolean  @default(false)
-  evento     evento   @relation(fields: [evento_id], references: [id], onDelete: Cascade, map: "Asistencia_evento_id_fkey")
-  miembros   miembros @relation(fields: [miembro_id], references: [id], onDelete: Cascade, map: "Asistencia_miembro_id_fkey")
-
-  @@unique([miembro_id, evento_id], map: "Asistencia_miembro_id_evento_id_key")
-}
-
-/// This model contains row level security and requires additional setup for migrations. Visit https://pris.ly/d/row-level-security for more info.
-model evento {
-  id         String       @id(map: "Evento_pkey") @default(dbgenerated("gen_random_uuid()")) @db.Uuid
-  nombre     String
-  fecha      DateTime
-  asistencia asistencia[]
-}
-
-/// This model contains row level security and requires additional setup for migrations. Visit https://pris.ly/d/row-level-security for more info.
-model miembros {
-  id         String       @id @default(dbgenerated("gen_random_uuid()")) @map("_id") @db.Uuid
-  nombre     String
-  apellido   String
-  cedula     String       @unique
-  direccion  String?
-  telef      String?
-  telf_2     String?
-  status     Boolean      @default(true)
-  zona_id    String       @db.Uuid
-  kids       Boolean?     @default(false)
-  asistencia asistencia[]
-  zonas      zonas        @relation(fields: [zona_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
-}
-
-/// This model contains row level security and requires additional setup for migrations. Visit https://pris.ly/d/row-level-security for more info.
-model sessions {
-  id            String   @id
-  session_token String   @unique
-  user_id       String
-  expires       DateTime
-  users         users    @relation(fields: [user_id], references: [id], onDelete: Cascade)
-}
-
-/// This model contains row level security and requires additional setup for migrations. Visit https://pris.ly/d/row-level-security for more info.
-model users {
-  id             String     @id
-  name           String?
-  email          String?    @unique
-  email_verified DateTime?
-  image          String?
-  username       String?    @unique
-  password_hash  String?
-  accounts       accounts[]
-  sessions       sessions[]
-}
-
-/// This model contains row level security and requires additional setup for migrations. Visit https://pris.ly/d/row-level-security for more info.
-model verification_tokens {
-  identifier String
-  token      String   @unique
-  expires    DateTime
-
-  @@unique([identifier, token])
-}
-
-/// This model contains row level security and requires additional setup for migrations. Visit https://pris.ly/d/row-level-security for more info.
-model zonas {
-  id          String     @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
-  nombre_zona String
-  miembros    miembros[]
-}

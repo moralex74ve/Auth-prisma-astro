@@ -1,48 +1,156 @@
-# Astro Starter Kit: Basics
+🚀 Sistema de Autenticación con Astro + Prisma
+Un sistema de autenticación seguro y escalable construido con Astro, Prisma y PostgreSQL, diseñado para ser el punto de partida perfecto para cualquier aplicación que requiera autenticación de usuarios.
 
-```sh
-npm create astro@latest -- --template basics
-```
+🌟 Características Principales
+Autenticación segura con hash de contraseñas (bcrypt)
 
-[![Open in StackBlitz](https://developer.stackblitz.com/img/open_in_stackblitz.svg)](https://stackblitz.com/github/withastro/astro/tree/latest/examples/basics)
-[![Open with CodeSandbox](https://assets.codesandbox.io/github/button-edit-lime.svg)](https://codesandbox.io/p/sandbox/github/withastro/astro/tree/latest/examples/basics)
-[![Open in GitHub Codespaces](https://github.com/codespaces/badge.svg)](https://codespaces.new/withastro/astro?devcontainer_path=.devcontainer/basics/devcontainer.json)
+Sesiones persistentes con manejo seguro de cookies
 
-> 🧑‍🚀 **Seasoned astronaut?** Delete this file. Have fun!
+Sistema de roles (admin/usuario)
 
-![just-the-basics](https://github.com/withastro/astro/assets/2244813/a0a5533c-a856-4198-8470-2d67b1d7c554)
+Panel de administración para gestión de usuarios
 
-## 🚀 Project Structure
+Diseño responsivo que funciona en cualquier dispositivo
 
-Inside of your Astro project, you'll see the following folders and files:
+Fácil de integrar con cualquier frontend
 
-```text
-/
-├── public/
-│   └── favicon.svg
-├── src/
-│   ├── layouts/
-│   │   └── Layout.astro
-│   └── pages/
-│       └── index.astro
-└── package.json
-```
+🛠️ Tecnologías Utilizadas
+Frontend: Astro 5.x
 
-To learn more about the folder structure of an Astro project, refer to [our guide on project structure](https://docs.astro.build/en/basics/project-structure/).
+Backend: Astro API Routes
 
-## 🧞 Commands
+Base de datos: PostgreSQL
 
-All commands are run from the root of the project, from a terminal:
+ORM: Prisma
 
-| Command                   | Action                                           |
-| :------------------------ | :----------------------------------------------- |
-| `npm install`             | Installs dependencies                            |
-| `npm run dev`             | Starts local dev server at `localhost:4321`      |
-| `npm run build`           | Build your production site to `./dist/`          |
-| `npm run preview`         | Preview your build locally, before deploying     |
-| `npm run astro ...`       | Run CLI commands like `astro add`, `astro check` |
-| `npm run astro -- --help` | Get help using the Astro CLI                     |
+Autenticación: JWT + Cookies HTTP-Only
 
-## 👀 Want to learn more?
+Estilos: Tailwind CSS
 
-Feel free to check [our documentation](https://docs.astro.build) or jump into our [Discord server](https://astro.build/chat).
+Validación: Zod
+
+🚀 Empezando
+Requisitos Previos
+Node.js 18+
+
+PostgreSQL 14+
+
+pnpm (recomendado)
+
+Instalación
+Clonar el repositorio
+
+Bash
+
+git clone [URL_DEL_REPOSITORIO]
+cd auth-prisma-astro
+Instalar dependencias
+
+Bash
+
+pnpm install
+Configurar variables de entorno
+Crea un archivo .env en la raíz del proyecto:
+
+DATABASE_URL="postgresql://usuario:contraseña@localhost:5432/nombre_bd?schema=public"
+SESSION_SECRET="tu_clave_secreta_muy_larga_y_segura"
+Ejecutar migraciones
+
+Bash
+
+pnpm prisma migrate dev --name init
+Crear usuario administrador
+
+Bash
+
+pnpm run seed
+Esto creará un usuario administrador con las siguientes credenciales:
+
+Email: admin@ejemplo.com
+
+Contraseña: admin123
+
+Importante: Cambia estas credenciales después del primer inicio de sesión.
+
+Iniciar el servidor de desarrollo
+Bash
+
+pnpm run dev
+📊 Estructura de la Base de Datos
+Modelo de Usuarios (SQL)
+SQL
+
+CREATE TABLE usuarios (
+  id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+  nombre VARCHAR(50) NOT NULL,
+  correo VARCHAR(100) UNIQUE NOT NULL,
+  clave VARCHAR(255) NOT NULL,
+  rol VARCHAR(20) NOT NULL DEFAULT 'usuario',
+  activo BOOLEAN NOT NULL DEFAULT true,
+  ultimo_login TIMESTAMP(6),
+  creado_en TIMESTAMP(6) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  actualizado_en TIMESTAMP(6) NOT NULL DEFAULT CURRENT_TIMESTAMP
+);
+🔒 Beneficios de la Autenticación
+Seguridad Mejorada
+Contraseñas hasheadas con bcrypt
+
+Cookies HTTP-Only y Secure
+
+Protección contra CSRF
+
+Rate limiting integrado
+
+Fácil de Mantener
+Código modular y bien organizado
+
+Validación de datos con Zod
+
+Tipado estático con TypeScript
+
+Escalable
+Diseñado para manejar miles de usuarios
+
+Fácil de integrar con microservicios
+
+Base de datos optimizada para rendimiento
+
+Experiencia de Desarrollo
+Hot Module Replacement (HMR)
+
+Migraciones de base de datos fáciles
+
+Scripts útiles incluidos
+
+📱 Gestión de Usuarios
+El sistema incluye un panel de administración completo para gestionar usuarios, permitiendo:
+
+Ver lista de usuarios
+
+Crear nuevos usuarios
+
+Editar usuarios existentes
+
+Cambiar roles
+
+Activar/desactivar cuentas
+
+🛠️ Scripts Disponibles
+pnpm dev: Inicia el servidor de desarrollo
+
+pnpm build: Construye la aplicación para producción
+
+pnpm preview: Previsualiza la versión de producción
+
+pnpm seed: Crea el usuario administrador por defecto
+
+pnpm prisma studio: Abre el cliente visual de Prisma
+
+📄 Licencia
+Este proyecto está bajo la Licencia MIT. Ver el archivo LICENSE para más detalles.
+
+🤝 Contribuciones
+Las contribuciones son bienvenidas. Por favor, lee las pautas de contribución antes de enviar un pull request.
+
+📧 Contacto
+¿Tienes preguntas? Abre un issue o contáctame en tu@email.com
