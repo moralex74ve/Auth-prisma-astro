@@ -1,84 +1,150 @@
-🚀 Sistema de Autenticación con Astro + Prisma
+# 🚀 Sistema de Autenticación con Astro + Prisma
+
 Un sistema de autenticación seguro y escalable construido con Astro, Prisma y PostgreSQL, diseñado para ser el punto de partida perfecto para cualquier aplicación que requiera autenticación de usuarios.
 
-🌟 Características Principales
-Autenticación segura con hash de contraseñas (bcrypt)
+## 🌟 Características Principales
 
-Sesiones persistentes con manejo seguro de cookies
+-   **Autenticación segura** con hash de contraseñas (bcrypt)
+-   **Sesiones persistentes** con manejo seguro de cookies
+-   **Sistema de roles** (admin/usuario)
+-   **Panel de administración** para gestión de usuarios
+-   **Diseño responsivo** que funciona en cualquier dispositivo
+-   **Fácil de integrar** con cualquier frontend
 
-Sistema de roles (admin/usuario)
+---
 
-Panel de administración para gestión de usuarios
+## 🛠️ Tecnologías Utilizadas
 
-Diseño responsivo que funciona en cualquier dispositivo
+-   **Frontend**: Astro 5.x
+-   **Backend**: Astro API Routes
+-   **Base de datos**: PostgreSQL
+-   **ORM**: Prisma
+-   **Autenticación**: JWT + Cookies HTTP-Only
+-   **Estilos**: Tailwind CSS
+-   **Validación**: Zod
 
-Fácil de integrar con cualquier frontend
+---
 
-🛠️ Tecnologías Utilizadas
-Frontend: Astro 5.x
+## 🚀 Empezando
 
-Backend: Astro API Routes
+### Requisitos Previos
 
-Base de datos: PostgreSQL
+-   Node.js 18+
+-   PostgreSQL 14+
+-   pnpm (recomendado)
 
-ORM: Prisma
+### Instalación
 
-Autenticación: JWT + Cookies HTTP-Only
+1.  **Clonar el repositorio**
+    ```bash
+    git clone [URL_DEL_REPOSITORIO]
+    cd auth-prisma-astro
+    ```
+2.  **Instalar dependencias**
+    ```bash
+    pnpm install
+    ```
+3.  **Configurar variables de entorno**
+    Crea un archivo `.env` en la raíz del proyecto:
+    ```
+    DATABASE_URL="postgresql://usuario:contraseña@localhost:5432/nombre_bd?schema=public"
+    SESSION_SECRET="tu_clave_secreta_muy_larga_y_segura"
+    ```
+4.  **Ejecutar migraciones**
+    ```bash
+    pnpm prisma migrate dev --name init
+    ```
+5.  **Crear usuario administrador**
+    ```bash
+    pnpm run seed
+    ```
+    Esto creará un usuario administrador con las siguientes credenciales:
+    -   **Email:** `admin@ejemplo.com`
+    -   **Contraseña:** `admin123`
 
-Estilos: Tailwind CSS
+    > **Importante:** Cambia estas credenciales después del primer inicio de sesión.
 
-Validación: Zod
+### Iniciar el servidor de desarrollo
 
-🚀 Empezando
-Requisitos Previos
-Node.js 18+
+```bash
+pnpm run dev
 
-PostgreSQL 14+
+Aquí tienes el código completo para tu archivo README.md, listo para copiar y pegar. He organizado y formateado todo para que sea un documento claro y profesional.
 
-pnpm (recomendado)
+Markdown
 
-Instalación
-Clonar el repositorio
+# 🚀 Sistema de Autenticación con Astro + Prisma
 
-Bash
+Un sistema de autenticación seguro y escalable construido con Astro, Prisma y PostgreSQL, diseñado para ser el punto de partida perfecto para cualquier aplicación que requiera autenticación de usuarios.
 
-git clone [URL_DEL_REPOSITORIO]
-cd auth-prisma-astro
-Instalar dependencias
+## 🌟 Características Principales
 
-Bash
+-   **Autenticación segura** con hash de contraseñas (bcrypt)
+-   **Sesiones persistentes** con manejo seguro de cookies
+-   **Sistema de roles** (admin/usuario)
+-   **Panel de administración** para gestión de usuarios
+-   **Diseño responsivo** que funciona en cualquier dispositivo
+-   **Fácil de integrar** con cualquier frontend
 
-pnpm install
-Configurar variables de entorno
-Crea un archivo .env en la raíz del proyecto:
+---
 
-DATABASE_URL="postgresql://usuario:contraseña@localhost:5432/nombre_bd?schema=public"
-SESSION_SECRET="tu_clave_secreta_muy_larga_y_segura"
-Ejecutar migraciones
+## 🛠️ Tecnologías Utilizadas
 
-Bash
+-   **Frontend**: Astro 5.x
+-   **Backend**: Astro API Routes
+-   **Base de datos**: PostgreSQL
+-   **ORM**: Prisma
+-   **Autenticación**: JWT + Cookies HTTP-Only
+-   **Estilos**: Tailwind CSS
+-   **Validación**: Zod
 
-pnpm prisma migrate dev --name init
-Crear usuario administrador
+---
 
-Bash
+## 🚀 Empezando
 
-pnpm run seed
-Esto creará un usuario administrador con las siguientes credenciales:
+### Requisitos Previos
 
-Email: admin@ejemplo.com
+-   Node.js 18+
+-   PostgreSQL 14+
+-   pnpm (recomendado)
 
-Contraseña: admin123
+### Instalación
 
-Importante: Cambia estas credenciales después del primer inicio de sesión.
+1.  **Clonar el repositorio**
+    ```bash
+    git clone [URL_DEL_REPOSITORIO]
+    cd auth-prisma-astro
+    ```
+2.  **Instalar dependencias**
+    ```bash
+    pnpm install
+    ```
+3.  **Configurar variables de entorno**
+    Crea un archivo `.env` en la raíz del proyecto:
+    ```
+    DATABASE_URL="postgresql://usuario:contraseña@localhost:5432/nombre_bd?schema=public"
+    SESSION_SECRET="tu_clave_secreta_muy_larga_y_segura"
+    ```
+4.  **Ejecutar migraciones**
+    ```bash
+    pnpm prisma migrate dev --name init
+    ```
+5.  **Crear usuario administrador**
+    ```bash
+    pnpm run seed
+    ```
+    Esto creará un usuario administrador con las siguientes credenciales:
+    -   **Email:** `admin@ejemplo.com`
+    -   **Contraseña:** `admin123`
 
-Iniciar el servidor de desarrollo
-Bash
+    > **Importante:** Cambia estas credenciales después del primer inicio de sesión.
 
+### Iniciar el servidor de desarrollo
+
+```bash
 pnpm run dev
 📊 Estructura de la Base de Datos
 Modelo de Usuarios (SQL)
-SQL
 
 CREATE TABLE usuarios (
   id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
@@ -91,6 +157,7 @@ CREATE TABLE usuarios (
   creado_en TIMESTAMP(6) NOT NULL DEFAULT CURRENT_TIMESTAMP,
   actualizado_en TIMESTAMP(6) NOT NULL DEFAULT CURRENT_TIMESTAMP
 );
+
 🔒 Beneficios de la Autenticación
 Seguridad Mejorada
 Contraseñas hasheadas con bcrypt
@@ -153,4 +220,12 @@ Este proyecto está bajo la Licencia MIT. Ver el archivo LICENSE para más detal
 Las contribuciones son bienvenidas. Por favor, lee las pautas de contribución antes de enviar un pull request.
 
 📧 Contacto
-¿Tienes preguntas? Abre un issue o contáctame en tu@email.com
+¿Tienes preguntas? Abre un issue o contáctame en tu@email.com.
+
+¿Necesitas ayuda para crear un archivo de pautas de contribución (`CONTRIBUTING.md`) o la sección de "Problemas comunes" para tu `README`?
+
+
+
+
+
+
