@@ -46,15 +46,26 @@ Un sistema de autenticación seguro y escalable construido con Astro, Prisma y P
     ```
 3.  **Configurar variables de entorno**
     Crea un archivo `.env` en la raíz del proyecto:
+
+    ![connection chains](https://i.postimg.cc/c1vj6DDB/Supabase-connection.png)
+
     ```
     DATABASE_URL="postgresql://usuario:contraseña@localhost:5432/nombre_bd?schema=public"
+    DIRECT_URL="https://your-project.supabase.co"
+
+    NODE_VERSION=22.17.0
     SESSION_SECRET="tu_clave_secreta_muy_larga_y_segura"
+
     ```
-4.  **Ejecutar migraciones**
+    **Para generar la clave secreta recomendamos usar la siguiente Pagina:**
+     -  [JWT Secrets Generator](https://jwtsecrets.com/#generator)
+  
+
+1.  **Ejecutar migraciones**
     ```bash
     pnpm prisma migrate dev --name init
     ```
-5.  **Crear usuario administrador**
+2.  **Crear usuario administrador**
     ```bash
     pnpm run seed
     ```
