@@ -1,5 +1,4 @@
-# 🚀 Sistema de Autenticación con Astro + Prisma + PostgreSQL en Supabase
-## Usando correo electronico y contraseña
+# 🚀 Sistema de Autenticación con Astro + Prisma + PostgreSQL Supabase, usando correo electronico y contraseña
 
 Un sistema de autenticación seguro y escalable construido con Astro, Prisma y PostgreSQL, diseñado para ser el punto de partida perfecto para cualquier aplicación que requiera autenticación de usuarios.
 
@@ -54,7 +53,7 @@ Un sistema de autenticación seguro y escalable construido con Astro, Prisma y P
 
     ```
     DATABASE_URL="postgresql://usuario:contraseña@localhost:5432/nombre_bd?schema=public"
-    DIRECT_URL="https://your-project.supabase.co"
+    DIRECT_URL="postgresql://postgres.xkepvqcnwkylpobjqtya:U7Aa4HKY5TgL81sQ@aws-0-us-east-2.pooler.supabase.com:5432/postgres"
 
     NODE_VERSION=22.17.0
 
