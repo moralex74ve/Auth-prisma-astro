@@ -37,7 +37,7 @@ Un sistema de autenticación seguro y escalable construido con Astro, Prisma y P
 
 1.  **Clonar el repositorio**
     ```bash
-    git clone [URL_DEL_REPOSITORIO]
+    git clone https://github.com/moralex74ve/Auth-prisma-astro.git
     cd auth-prisma-astro
     ```
 2.  **Instalar dependencias**
@@ -46,10 +46,23 @@ Un sistema de autenticación seguro y escalable construido con Astro, Prisma y P
     ```
 3.  **Configurar variables de entorno**
     Crea un archivo `.env` en la raíz del proyecto:
+
+    **Para la conexión en supabase**
+    ![connection chains](https://i.postimg.cc/c1vj6DDB/Supabase-connection.png)
+
+
     ```
     DATABASE_URL="postgresql://usuario:contraseña@localhost:5432/nombre_bd?schema=public"
+    DIRECT_URL="postgresql://postgres.xkepvqcnwkylpobjqtya:U7Aa4HKY5TgL81sQ@aws-0-us-east-2.pooler.supabase.com:5432/postgres"
+
+    NODE_VERSION=22.17.0
+    
     SESSION_SECRET="tu_clave_secreta_muy_larga_y_segura"
     ```
+    **Para generar la clave secreta recomendamos usar la siguiente Pagina:**
+     -  [JWT Secrets Generator](https://jwtsecrets.com/#generator)
+
+
 4.  **Ejecutar migraciones**
     ```bash
     pnpm prisma migrate dev --name init
