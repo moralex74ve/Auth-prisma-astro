@@ -48,13 +48,6 @@ Un sistema de autenticación seguro y escalable construido con Astro, Prisma y P
     Crea un archivo `.env` en la raíz del proyecto:
     ```
     DATABASE_URL="postgresql://usuario:contraseña@localhost:5432/nombre_bd?schema=public"
-<<<<<<< HEAD
-    DIRECT_URL="postgresql://postgres.xkepvqcnwkylpobjqtya:U7Aa4HKY5TgL81sQ@aws-0-us-east-2.pooler.supabase.com:5432/postgres"
-
-    NODE_VERSION=22.17.0
-
-=======
->>>>>>> parent of c72dc69 (actualizando readme.md)
     SESSION_SECRET="tu_clave_secreta_muy_larga_y_segura"
     ```
 4.  **Ejecutar migraciones**
